@@ -1,0 +1,26 @@
+{
+  "cagr": 0.0985982259076299,
+  "sharpe": 0.8617706944098094,
+  "max_drawdown": -0.20919239586641242,
+  "calmar": 0.47132796342460487,
+  "win_rate": 0.5581308411214954,
+  "total_return": 6.384526345511351,
+  "sortino": 1.091908945182672,
+  "optimized_parameters": {
+    "signal_weights_MVCT": [
+      0.4,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "top_n_base": 5,
+    "rebal_freq": "M",
+    "cash_filter": true,
+    "sizing": "inv_vol",
+    "breadth_thr": 0.6,
+    "regime_adaptive_top_n": true
+  },
+  "start_date": "2004-12-07",
+  "end_date": "2026-03-13",
+  "backtest_years": 21.26
+}

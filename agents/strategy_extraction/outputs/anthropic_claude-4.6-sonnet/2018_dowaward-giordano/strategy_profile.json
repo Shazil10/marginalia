@@ -1,0 +1,24 @@
+{
+  "strategy_name": "Ranked Asset Allocation Model (RAAM)",
+  "source_paper": "Giordano, G. 2018",
+  "strategy_type": "momentum / sector rotation",
+  "abstract": "Ranked Asset Allocation Model (RAAM) is a momentum / sector rotation strategy from Giordano, G. 2018. Universe: XLK (Technology), XLF (Financials), XLV (Health Care)...; rebalances monthly. Entry: At each rebalance date, compute 4 signals for every sector ETF: (1) Momentum \u2014 4-month rate of change, (2) EWMA Volatility \u2014 RiskMetrics-style exponentially weighted vol (lambda=0.94), (3) Average Pai.... Exit: At rebalance: sectors falling out of top-N are sold. In neutral/bear regimes, a cash filter replaces any selected sector with negative absolute momentum with SH....",
+  "risk_profile": {
+    "label": "Moderate",
+    "description": "Best for balanced investors accepting moderate drawdowns for above-average returns."
+  },
+  "optimized_parameters": {
+    "signal_weights_MVCT": [
+      0.4,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "top_n_base": 5,
+    "rebal_freq": "M",
+    "cash_filter": true,
+    "sizing": "inv_vol",
+    "breadth_thr": 0.6,
+    "regime_adaptive_top_n": true
+  }
+}

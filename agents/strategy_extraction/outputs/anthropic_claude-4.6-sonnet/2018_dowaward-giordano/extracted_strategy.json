@@ -1,0 +1,62 @@
+{
+  "strategy_name": "Ranked Asset Allocation Model (RAAM)",
+  "strategy_type": "momentum / sector rotation",
+  "entry_signal": "At each rebalance date, compute 4 signals for every sector ETF: (1) Momentum — 4-month rate of change, (2) EWMA Volatility — RiskMetrics-style exponentially weighted vol (lambda=0.94), (3) Average Pairwise Correlation — mean correlation of each sector vs all others over 84-day window, (4) ATR Trend/Breakout — price vs ATR-based upper/lower bands. Rank each signal across sectors (lower rank = better: high momentum, low vol, low corr, uptrend). Composite score R = weighted sum of ranks. Select top-N sectors by lowest R. Regime-adaptive top-N: Bull (SPY > 200-SMA and breadth > 60%) → top_n+3; Neutral → top_n; Bear (SPY < 200-SMA) → top_n-2. Weight selected sectors equally or by inverse volatility.",
+  "exit_signal": "At rebalance: sectors falling out of top-N are sold. In neutral/bear regimes, a cash filter replaces any selected sector with negative absolute momentum with SHY (cash). In bear regime, cash filter is always active.",
+  "rebalance_frequency": "monthly",
+  "asset_universe": [
+    "XLK (Technology)",
+    "XLF (Financials)",
+    "XLV (Health Care)",
+    "XLE (Energy)",
+    "XLI (Industrials)",
+    "XLY (Consumer Discretionary)",
+    "XLP (Consumer Staples)",
+    "XLU (Utilities)",
+    "XLB (Materials)",
+    "XLRE (Real Estate)",
+    "XLC (Communication Services)"
+  ],
+  "parameters": {
+    "momentum_lookback_days": 84,
+    "ewma_lambda": 0.94,
+    "ewma_window": 84,
+    "correlation_lookback_days": 84,
+    "atr_period": 42,
+    "atr_high_period": 63,
+    "atr_low_period": 105,
+    "signal_weights_MVCT": [0.25, 0.25, 0.25, 0.25],
+    "top_n_base": 5,
+    "breadth_threshold": 0.6,
+    "sma_period": 200,
+    "regime_bull_extra": 3,
+    "regime_bear_reduce": 2
+  },
+  "parameter_ranges": {
+    "signal_weights_MVCT": "grid of 6 combinations (equal, momentum-heavy, vol-heavy, etc.)",
+    "top_n_base": [4, 5, 6],
+    "sizing": ["equal", "inv_vol"]
+  },
+  "hidden_params": [
+    "exact ATR smoothing method (simple moving average vs Wilder)",
+    "breadth threshold calibration",
+    "cash allocation rule details"
+  ],
+  "suggested_defaults": {
+    "signal_weights": [0.25, 0.25, 0.25, 0.25],
+    "top_n": 5,
+    "rebal_freq": "M",
+    "sizing": "equal",
+    "cash_filter": true
+  },
+  "source_paper": "Giordano, G. 2018",
+  "python_indicators_needed": [
+    "momentum_roc",
+    "ewma_volatility",
+    "pairwise_correlation",
+    "ATR_trend_breakout",
+    "SPY_200SMA_regime",
+    "market_breadth",
+    "rank_composite"
+  ]
+}

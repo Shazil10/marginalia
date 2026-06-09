@@ -1,0 +1,62 @@
+{
+  "strategy_name": "Quantamentals: Combined Fundamental and Technical Factor Strategy",
+  "strategy_type": "factor",
+  "entry_signal": "Buy stocks that rank highest on a composite score combining: (1) Value factor - high book-to-market ratio, (2) Quality/Profitability factor - high gross profitability (sales minus COGS divided by total assets), low debt-to-asset ratio, stable earnings, low accruals, (3) Cross-sectional momentum - strongest price performance over recent lookback period. Select top decile or quintile of stocks ranked by composite score.",
+  "exit_signal": "Sell stocks that fall out of the top composite score ranking (bottom decile or quintile) at each rebalancing period, or when fundamental metrics deteriorate below threshold.",
+  "rebalance_frequency": "monthly",
+  "asset_universe": "US equities, broad stock market universe (similar to Russell 1000 or S&P 1500)",
+  "parameters": {
+    "momentum_lookback_months": 12,
+    "momentum_skip_months": 1,
+    "top_percentile_threshold": 20,
+    "value_weight": 0.33,
+    "quality_weight": 0.33,
+    "momentum_weight": 0.34,
+    "min_market_cap_millions": 500,
+    "gross_profitability_threshold": 0.0,
+    "debt_to_asset_max": 0.5,
+    "num_holdings": 50
+  },
+  "parameter_ranges": {
+    "momentum_lookback_months": [6, 9, 12, 18],
+    "momentum_skip_months": [0, 1, 2],
+    "top_percentile_threshold": [10, 20, 30],
+    "value_weight": [0.2, 0.33, 0.4, 0.5],
+    "quality_weight": [0.2, 0.33, 0.4, 0.5],
+    "momentum_weight": [0.2, 0.33, 0.4, 0.5],
+    "min_market_cap_millions": [100, 500, 1000, 2000],
+    "num_holdings": [25, 50, 75, 100]
+  },
+  "hidden_params": [
+    "composite_score_aggregation_method",
+    "factor_normalization_method",
+    "accruals_definition",
+    "earnings_stability_lookback",
+    "rebalancing_day_of_month",
+    "transaction_cost_assumption",
+    "sector_neutralization_flag",
+    "winsorization_percentile"
+  ],
+  "suggested_defaults": {
+    "composite_score_aggregation_method": "equal_weighted_z_score_sum",
+    "factor_normalization_method": "z_score_cross_sectional",
+    "accruals_definition": "net_income_minus_operating_cash_flow_divided_by_total_assets",
+    "earnings_stability_lookback": 8,
+    "rebalancing_day_of_month": 1,
+    "transaction_cost_assumption": 0.001,
+    "sector_neutralization_flag": false,
+    "winsorization_percentile": 1
+  },
+  "source_paper": "Cain, Christopher and Connors, Laurence, 2020",
+  "python_indicators_needed": [
+    "book_to_market_ratio",
+    "gross_profitability",
+    "debt_to_asset_ratio",
+    "accruals",
+    "earnings_stability",
+    "cross_sectional_momentum",
+    "rolling_returns",
+    "z_score_normalization",
+    "percentile_rank"
+  ]
+}

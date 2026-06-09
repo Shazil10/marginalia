@@ -1,0 +1,21 @@
+{
+  "cagr": 0.1270313159508223,
+  "sharpe": 0.7524340791784974,
+  "max_drawdown": -0.2861834089874596,
+  "calmar": 0.4438807840058567,
+  "win_rate": 0.5581210191082803,
+  "total_return": 0.8149118547705596,
+  "optimized_parameters": {
+    "momentum_lookback_months": 6,
+    "momentum_skip_months": 0,
+    "top_percentile_threshold": 20,
+    "value_weight": 0.2,
+    "quality_weight": 0.4,
+    "momentum_weight": 0.4,
+    "min_market_cap_millions": 1000,
+    "num_holdings": 25
+  },
+  "start_date": "2020-01-03",
+  "end_date": "2024-12-30",
+  "backtest_years": 4.99
+}

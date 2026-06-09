@@ -1,0 +1,15 @@
+{
+  "strategy_name": "Time Series Reversal Based on End-of-Month Payment Cycle",
+  "source_paper": "Graziani 2024",
+  "strategy_type": "mean_reversion",
+  "abstract": "Time Series Reversal Based on End-of-Month Payment Cycle is a mean reversion strategy from Graziani 2024. Universe: SPY; rebalances monthly. Entry: Buy the S&P 500 if the return of the last week of the month (last 5 trading days of the calendar month) is negative. Enter the position at the close of the last trading day of the month. Exit: Hold the position for the entire next calendar month and sell at the close of the last trading day of that month. If the last week of the month return is non-ne....",
+  "risk_profile": {
+    "label": "Moderate",
+    "description": "Best for balanced investors accepting moderate drawdowns for above-average returns."
+  },
+  "optimized_parameters": {
+    "lookback_window_days": 5,
+    "holding_period_months": 1,
+    "threshold_return": 0.0
+  }
+}

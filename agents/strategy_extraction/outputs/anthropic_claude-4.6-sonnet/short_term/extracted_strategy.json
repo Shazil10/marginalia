@@ -1,0 +1,46 @@
+{
+  "strategy_name": "Time Series Reversal via End-of-Month Payment Cycle",
+  "strategy_type": "mean_reversion",
+  "entry_signal": "Buy S&P 500 at the start of the next month if the return of the last week of the current month is negative",
+  "exit_signal": "Exit (sell) the S&P 500 position at the end of the holding month (i.e., hold for one full calendar month then close)",
+  "rebalance_frequency": "monthly",
+  "asset_universe": ["SPY", "S&P 500 index or equivalent ETF"],
+  "parameters": {
+    "signal_window_weeks": 1,
+    "holding_period_months": 1,
+    "signal_threshold_return": 0.0,
+    "lookback_last_week_days": 5,
+    "transaction_cost_bps": 10,
+    "volume_threshold_percentile": 50
+  },
+  "parameter_ranges": {
+    "signal_window_weeks": [1, 2, 3],
+    "holding_period_months": [1, 2, 3],
+    "signal_threshold_return": [-0.02, -0.01, 0.0, 0.01],
+    "lookback_last_week_days": [3, 4, 5, 7],
+    "transaction_cost_bps": [5, 10, 20, 30],
+    "volume_threshold_percentile": [25, 50, 75]
+  },
+  "hidden_params": [
+    "exact definition of last week of month (calendar days vs trading days)",
+    "threshold on volume above which negative serial correlation is stronger (TAR threshold)",
+    "expansion vs recession regime filter (NBER real-time vs ex-post)",
+    "whether to go short or stay in cash when signal is positive",
+    "specific transaction cost model used"
+  ],
+  "suggested_defaults": {
+    "last_week_definition": "last 5 trading days of the calendar month",
+    "volume_tar_threshold": "75th percentile of trailing 12-month average daily volume",
+    "regime_filter": "none (no NBER filter applied in real-time)",
+    "positive_signal_action": "hold cash (no short position)",
+    "transaction_cost_model": "10 bps round-trip per trade"
+  },
+  "source_paper": "Graziani, G. (2024)",
+  "python_indicators_needed": [
+    "weekly_return",
+    "monthly_return",
+    "rolling_volume_percentile",
+    "threshold_autoregressive_signal",
+    "calendar_month_end_detection"
+  ]
+}

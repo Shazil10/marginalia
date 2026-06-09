@@ -1,0 +1,20 @@
+{
+  "strategy_name": "Quantamentals: Combined Fundamental and Technical Factor Strategy",
+  "source_paper": "Cain, Christopher and Connors, Laurence, 2020",
+  "strategy_type": "factor",
+  "abstract": "Quantamentals: Combined Fundamental and Technical Factor Strategy is a factor strategy from Cain, Christopher and Connors, Laurence, 2020. Universe: US equities, broad stock market universe (similar to Russell 1000 or S&P 1500); rebalances monthly. Entry: Buy stocks that rank highest on a composite score combining: (1) Value factor - high book-to-market ratio, (2) Quality/Profitability factor - high gross profitability (sales minus COGS divided by tota.... Exit: Sell stocks that fall out of the top composite score ranking (bottom decile or quintile) at each rebalancing period, or when fundamental metrics deteriorate bel....",
+  "risk_profile": {
+    "label": "Moderate",
+    "description": "Best for balanced investors accepting moderate drawdowns for above-average returns."
+  },
+  "optimized_parameters": {
+    "momentum_lookback_months": 6,
+    "momentum_skip_months": 0,
+    "top_percentile_threshold": 20,
+    "value_weight": 0.2,
+    "quality_weight": 0.4,
+    "momentum_weight": 0.4,
+    "min_market_cap_millions": 1000,
+    "num_holdings": 25
+  }
+}

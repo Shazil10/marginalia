@@ -1,0 +1,19 @@
+{
+  "cagr": 0.13909785988763268,
+  "sharpe": 0.6752035170195517,
+  "max_drawdown": -0.39478015717028136,
+  "calmar": 0.3523425819693245,
+  "win_rate": 0.6666666666666666,
+  "total_return": 1.1826247535619943,
+  "optimized_parameters": {
+    "signal_window_weeks": 1,
+    "holding_period_months": 3,
+    "signal_threshold_return": 0.0,
+    "lookback_last_week_days": 4,
+    "transaction_cost_bps": 30,
+    "volume_threshold_percentile": 25
+  },
+  "start_date": "2019-01-03",
+  "end_date": "2024-12-30",
+  "backtest_years": 5.99
+}

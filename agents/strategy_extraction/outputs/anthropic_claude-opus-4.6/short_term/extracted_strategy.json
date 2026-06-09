@@ -1,0 +1,37 @@
+{
+  "strategy_name": "Time Series Reversal Based on End-of-Month Payment Cycle",
+  "strategy_type": "mean_reversion",
+  "entry_signal": "Buy the S&P 500 if the return of the last week of the month (last 5 trading days of the calendar month) is negative. Enter the position at the close of the last trading day of the month.",
+  "exit_signal": "Hold the position for the entire next calendar month and sell at the close of the last trading day of that month. If the last week of the month return is non-negative, stay in cash (no position) for the next month.",
+  "rebalance_frequency": "monthly",
+  "asset_universe": ["SPY"],
+  "parameters": {
+    "lookback_window_days": 5,
+    "holding_period_months": 1,
+    "threshold_return": 0.0
+  },
+  "parameter_ranges": {
+    "lookback_window_days": [3, 4, 5, 6, 7],
+    "holding_period_months": [1],
+    "threshold_return": [-0.02, -0.01, 0.0, 0.01]
+  },
+  "hidden_params": [
+    "exact_definition_of_last_week_of_month",
+    "transaction_cost_assumption",
+    "volume_threshold_for_enhanced_signal",
+    "expansion_recession_filter_definition"
+  ],
+  "suggested_defaults": {
+    "exact_definition_of_last_week_of_month": "last 5 trading days of the calendar month",
+    "transaction_cost_assumption": 0.001,
+    "volume_threshold_for_enhanced_signal": "not applied by default",
+    "expansion_recession_filter_definition": "NBER expansion periods only as optional filter"
+  },
+  "source_paper": "Graziani 2024",
+  "python_indicators_needed": [
+    "weekly_return_last_week_of_month",
+    "monthly_return",
+    "trading_volume",
+    "calendar_month_end_detection"
+  ]
+}

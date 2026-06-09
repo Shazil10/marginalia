@@ -1,0 +1,16 @@
+{
+  "cagr": 0.2191951659374458,
+  "sharpe": 1.1394262008612714,
+  "max_drawdown": -0.25075349283727916,
+  "calmar": 0.8741460127125231,
+  "win_rate": 0.5545454545454546,
+  "total_return": 1.589930666278108,
+  "optimized_parameters": {
+    "moving_average_period": 300,
+    "leverage_multiplier": 1.5,
+    "moving_average_type": "simple"
+  },
+  "start_date": "2020-03-11",
+  "end_date": "2024-12-30",
+  "backtest_years": 4.8
+}

@@ -1,0 +1,18 @@
+{
+  "strategy_name": "Time Series Reversal via End-of-Month Payment Cycle",
+  "source_paper": "Graziani, G. (2024)",
+  "strategy_type": "mean_reversion",
+  "abstract": "Time Series Reversal via End-of-Month Payment Cycle is a mean reversion strategy from Graziani, G. (2024). Universe: SPY, S&P 500 index or equivalent ETF; rebalances monthly. Entry: Buy S&P 500 at the start of the next month if the return of the last week of the current month is negative. Exit: Exit (sell) the S&P 500 position at the end of the holding month (i.e., hold for one full calendar month then close).",
+  "risk_profile": {
+    "label": "Aggressive",
+    "description": "Best for growth-oriented investors comfortable with significant volatility and deep drawdowns."
+  },
+  "optimized_parameters": {
+    "signal_window_weeks": 1,
+    "holding_period_months": 3,
+    "signal_threshold_return": 0.0,
+    "lookback_last_week_days": 4,
+    "transaction_cost_bps": 30,
+    "volume_threshold_percentile": 25
+  }
+}

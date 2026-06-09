@@ -1,0 +1,50 @@
+{
+  "strategy_name": "Moving Average Leverage Timing Strategy",
+  "strategy_type": "trend_following",
+  "entry_signal": "Buy leveraged equity exposure (e.g., 2x or 3x leveraged S&P 500 ETF or margin) when the broad U.S. equity market index (S&P 500) closes above its N-day simple moving average",
+  "exit_signal": "Exit leveraged equity position and move to Treasury bills (T-bills) when the broad U.S. equity market index (S&P 500) closes below its N-day simple moving average",
+  "rebalance_frequency": "daily",
+  "asset_universe": [
+    "S&P 500 index or SPY",
+    "UPRO (3x leveraged S&P 500 ETF)",
+    "SSO (2x leveraged S&P 500 ETF)",
+    "SH (inverse S&P 500 ETF)",
+    "BIL (Treasury bills ETF)",
+    "SHV (short-term Treasury ETF)"
+  ],
+  "parameters": {
+    "moving_average_period": 200,
+    "leverage_multiplier": 2.0,
+    "deleverage_asset": "T-bills",
+    "moving_average_type": "simple"
+  },
+  "parameter_ranges": {
+    "moving_average_period": [50, 100, 150, 200, 250, 300],
+    "leverage_multiplier": [1.5, 2.0, 2.5, 3.0],
+    "moving_average_type": ["simple", "exponential"]
+  },
+  "hidden_params": [
+    "exact moving average type (simple vs exponential)",
+    "signal confirmation lag (same-day close vs next-day open execution)",
+    "transaction cost assumptions",
+    "margin borrowing cost rate",
+    "rebalancing threshold to avoid whipsawing",
+    "index used for moving average signal (price return vs total return)"
+  ],
+  "suggested_defaults": {
+    "moving_average_type": "simple",
+    "execution_lag_days": 1,
+    "transaction_cost_bps": 10,
+    "margin_borrowing_rate_annual": 0.02,
+    "rebalancing_threshold_pct": 0.0,
+    "index_type": "price_return"
+  },
+  "source_paper": "Gayed and Bilello, 2016",
+  "python_indicators_needed": [
+    "simple_moving_average",
+    "exponential_moving_average",
+    "rolling_volatility",
+    "rolling_sharpe_ratio",
+    "drawdown"
+  ]
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantAgent Intake</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-container { max-height: 60vh; overflow-y: auto; }
+        .bot-msg { background-color: #f3f4f6; color: #1f2937; border-radius: 0.5rem 0.5rem 0.5rem 0; }
+        .user-msg { background-color: #3b82f6; color: white; border-radius: 0.5rem 0.5rem 0 0.5rem; text-align: right; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col font-sans">
+    <nav class="bg-slate-900 text-white p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-xl font-bold font-mono">🤖 QuantAgent / Intake Node</h1>
+        <button onclick="resetChat()" class="text-sm bg-red-600 hover:bg-red-700 px-3 py-1 rounded">Reset Session</button>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl flex flex-col md:flex-row overflow-hidden" style="min-height: 70vh;">
+            
+            <!-- Chat Interface -->
+            <div class="flex-1 flex flex-col border-r border-gray-200">
+                <div class="p-4 bg-slate-50 border-b border-gray-200">
+                    <h2 class="font-semibold text-slate-800">Chat with Intake Agent</h2>
+                    <p class="text-xs text-slate-500">I convert your natural language into a machine-readable risk profile.</p>
+                </div>
+                
+                <div id="chat-box" class="flex-1 p-6 chat-container space-y-4 flex flex-col">
+                    <div class="self-start bot-msg p-3 max-w-[80%] shadow-sm">
+                        Hello! I'm the Intake Agent. Tell me about your investment goals, your capital, and how much risk (or max drawdown) you are comfortable with.
+                    </div>
+                </div>
+
+                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                    <form id="chat-form" class="flex gap-2">
+                        <input type="text" id="user-input" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. I have 10k, looking for high growth, willing to risk 30%..." required>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors">Send</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Agent State Viewer -->
+            <div class="w-full md:w-1/3 bg-slate-900 text-white p-6 flex flex-col">
+                <h2 class="font-mono text-sm uppercase text-slate-400 mb-4 tracking-wider">Agent State: JSON Profile</h2>
+                <div id="json-viewer" class="flex-1 bg-slate-800 rounded-lg p-4 font-mono text-sm overflow-x-auto text-green-400">
+                    // Awaiting completion...
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatBox = document.getElementById('chat-box');
+        const jsonViewer = document.getElementById('json-viewer');
+
+        function appendMessage(text, isUser=false) {
+            const div = document.createElement('div');
+            div.className = `p-3 max-w-[80%] shadow-sm ${isUser ? 'self-end user-msg' : 'self-start bot-msg'}`;
+            div.innerText = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            appendMessage(message, true);
+            userInput.value = '';
+            userInput.disabled = true;
+
+            // Loading indicator
+            const loadDiv = document.createElement('div');
+            loadDiv.className = 'self-start bot-msg p-3 text-slate-400 italic text-sm';
+            loadDiv.id = 'loading-msg';
+            loadDiv.innerText = 'Agent is thinking...';
+            chatBox.appendChild(loadDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const data = await res.json();
+                
+                document.getElementById('loading-msg').remove();
+                
+                if (data.error) {
+                    appendMessage('Error: ' + data.error);
+                } else {
+                    appendMessage(data.reply);
+                    if (data.status === 'complete') {
+                        jsonViewer.innerHTML = `<pre>${JSON.stringify(data.profile, null, 2)}</pre>`;
+                    }
+                }
+            } catch (err) {
+                document.getElementById('loading-msg')?.remove();
+                appendMessage('Failed to connect to agent.');
+            } finally {
+                userInput.disabled = false;
+                userInput.focus();
+            }
+        });
+
+        async function resetChat() {
+            if (confirm("Reset the agent's memory?")) {
+                await fetch('/api/reset', { method: 'POST' });
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

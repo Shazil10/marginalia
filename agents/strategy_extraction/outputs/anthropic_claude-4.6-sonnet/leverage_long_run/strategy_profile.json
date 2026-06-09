@@ -1,0 +1,15 @@
+{
+  "strategy_name": "Moving Average Leverage Timing Strategy",
+  "source_paper": "Gayed and Bilello, 2016",
+  "strategy_type": "trend_following",
+  "abstract": "Moving Average Leverage Timing Strategy is a trend following strategy from Gayed and Bilello, 2016. Universe: S&P 500 index or SPY, UPRO (3x leveraged S&P 500 ETF), SSO (2x leveraged S&P 500 ETF)...; rebalances daily. Entry: Buy leveraged equity exposure (e.g., 2x or 3x leveraged S&P 500 ETF or margin) when the broad U.S. equity market index (S&P 500) closes above its N-day simple moving average. Exit: Exit leveraged equity position and move to Treasury bills (T-bills) when the broad U.S. equity market index (S&P 500) closes below its N-day simple moving avera....",
+  "risk_profile": {
+    "label": "Moderate",
+    "description": "Best for balanced investors accepting moderate drawdowns for above-average returns."
+  },
+  "optimized_parameters": {
+    "moving_average_period": 300,
+    "leverage_multiplier": 1.5,
+    "moving_average_type": "simple"
+  }
+}
