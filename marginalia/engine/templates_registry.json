@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "buy_and_hold",
+      "category": "passive",
+      "display_name": "Buy & Hold",
+      "description": "Passively hold the entire universe at equal weight, rebalancing periodically back to equal weight. The baseline every active strategy is measured against.",
+      "keywords": ["passive", "index", "equal weight", "hold", "benchmark"],
+      "params": {},
+      "example_papers": ["Bogle index investing"],
+      "implemented": true
+    },
+    {
+      "id": "time_series_momentum",
+      "category": "momentum",
+      "display_name": "Time-Series (Absolute) Momentum",
+      "description": "Hold each asset only while it is above its own trailing moving average AND has a positive trailing return; otherwise move that sleeve to cash. Also called trend following or absolute momentum.",
+      "keywords": ["trend following", "absolute momentum", "time series momentum", "moving average", "trend filter", "managed futures"],
+      "params": {
+        "lookback": {"default": 126, "min": 5, "max": 504, "description": "trailing return lookback in trading days"},
+        "sma_window": {"default": 200, "min": 10, "max": 400, "description": "trend filter moving-average window in trading days"}
+      },
+      "example_papers": ["Moskowitz Ooi Pedersen 2012 Time Series Momentum", "Faber 2007 Tactical Asset Allocation"],
+      "implemented": true
+    },
+    {
+      "id": "cross_sectional_momentum",
+      "category": "momentum",
+      "display_name": "Cross-Sectional (Relative) Momentum",
+      "description": "Rank the universe by trailing return and hold the top N names at equal weight, rebalancing each period. Relative-strength momentum.",
+      "keywords": ["relative strength", "cross sectional", "ranking", "winners", "top decile", "relative momentum"],
+      "params": {
+        "lookback": {"default": 126, "min": 5, "max": 504, "description": "trailing return lookback in trading days"},
+        "top_n": {"default": 3, "min": 1, "max": 50, "description": "number of top-ranked assets to hold"}
+      },
+      "example_papers": ["Jegadeesh Titman 1993", "Asness Moskowitz Pedersen 2013 Value and Momentum Everywhere"],
+      "implemented": true
+    },
+    {
+      "id": "dual_momentum",
+      "category": "momentum",
+      "display_name": "Dual Momentum",
+      "description": "Antonacci-style: pick the single best universe asset by trailing return (relative momentum), but only hold it if its return is also positive (absolute momentum); otherwise hold the safe asset.",
+      "keywords": ["dual momentum", "GEM", "global equity momentum", "antonacci", "absolute and relative"],
+      "params": {
+        "lookback": {"default": 252, "min": 20, "max": 504, "description": "trailing return lookback in trading days"}
+      },
+      "example_papers": ["Antonacci 2014 Dual Momentum Investing"],
+      "implemented": true
+    },
+    {
+      "id": "mean_reversion_rsi",
+      "category": "mean_reversion",
+      "display_name": "RSI Mean Reversion",
+      "description": "Per-asset mean reversion: enter long when RSI is oversold, exit to cash when RSI is overbought. Holds the position between thresholds.",
+      "keywords": ["mean reversion", "RSI", "oversold", "overbought", "contrarian", "reversal"],
+      "params": {
+        "rsi_window": {"default": 14, "min": 2, "max": 50, "description": "RSI averaging window in trading days"},
+        "oversold": {"default": 30, "min": 5, "max": 49, "description": "RSI level below which to buy"},
+        "overbought": {"default": 70, "min": 51, "max": 95, "description": "RSI level above which to sell"}
+      },
+      "example_papers": ["Connors Alvarez 2008 Short Term Trading Strategies"],
+      "implemented": true
+    },
+    {
+      "id": "sector_rotation",
+      "category": "momentum",
+      "display_name": "Sector Rotation",
+      "description": "Rotate into the top N momentum (sector) ETFs that are also above a long trend SMA; park sleeves that fail the trend filter in the safe asset.",
+      "keywords": ["sector rotation", "ETF rotation", "tactical", "relative strength rotation", "sector"],
+      "params": {
+        "lookback": {"default": 126, "min": 5, "max": 504, "description": "trailing return lookback in trading days"},
+        "top_n": {"default": 3, "min": 1, "max": 11, "description": "number of top sectors to hold"},
+        "trend_sma": {"default": 200, "min": 10, "max": 400, "description": "trend filter SMA window in trading days"}
+      },
+      "example_papers": ["Faber 2010 Relative Strength Strategies for Investing"],
+      "implemented": true
+    }
+  ]
+}

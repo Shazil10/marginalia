@@ -1,0 +1,12 @@
+{
+  "name": "main: only Shazil may merge",
+  "target": "branch",
+  "enforcement": "active",
+  "bypass_actors": [
+    {"actor_id": 127262641, "actor_type": "User", "bypass_mode": "pull_request"}
+  ],
+  "conditions": {"ref_name": {"include": ["refs/heads/main"], "exclude": []}},
+  "rules": [
+    {"type": "update", "parameters": {"update_allows_fetch_and_merge": false}}
+  ]
+}

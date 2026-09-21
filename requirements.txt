@@ -15,9 +15,14 @@ pdf2image
 pytesseract
 quantstats
 openai
+pydantic>=2
+fastapi
+uvicorn[standard]
+httpx
 streamlit
 python-dotenv
 requests
 transformers
 torch
 sentencepiece
+pytest
