@@ -1,11 +1,18 @@
 # Marginalia
 
-Research papers → verified trading rules → historical tests → approved Alpaca
-paper trading. Paper account is our deployment target; real money is future scope.
+**V1: research papers → cited strategy specifications → independently checked
+backtests → verification report → human-reviewed strategy registry.**
+
+Build trustworthy research verification first. Evaluate LEAN as primary engine
+and a separate bounded reference implementation; own data integrity, fidelity,
+comparison tests and audit trail. These integrations are planned, not built.
+
+Portfolio construction and Alpaca paper trading follow V1. Paper account remains
+eventual operational target; real money is a separate future decision.
 
 Start with these two guides:
 
-- [Complete system, current progress and next steps](docs/AI_NATIVE_HEDGE_FUND.md)
+- [Revised plan, current progress and next steps](docs/AI_NATIVE_HEDGE_FUND.md)
 - [Shazil and Vlad: parallel workstreams and handoff](docs/WORKSTREAMS.md)
 
 ## Current state
@@ -19,6 +26,10 @@ validation, portfolio risk and Alpaca order execution still need development.
 Current backtest optimizes and reports on same history by default. Use
 `--no-optimize` for baseline runs; even then, results are preliminary research.
 Read engine gaps in system guide before interpreting performance.
+
+First milestone: three manually reviewed cases, then one complete independent
+replication, then frozen twenty-case evaluation including failures and blockers.
+Two engines agreeing does not itself prove faithful extraction or alpha.
 
 ## Run current engine
 

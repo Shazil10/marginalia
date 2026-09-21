@@ -1,158 +1,222 @@
-# Marginalia: complete system, explained simply
+# Marginalia: verification first, paper fund later
 
-Deployment means **Alpaca paper trading**. Treat paper account as production:
-real schedules, real market data, recorded decisions, monitored orders, simulated
-money. Shazil decides whether approved strategies enter that account. Observe
-roughly one year before separately considering real capital; no automatic switch.
+## What we are building now
 
-## Status colors
+**V1: give Marginalia a research paper; receive a traceable report showing what
+was implemented, what reproduced, what failed, and what remains unknown.**
 
-🟢 Existing component, with narrow scope. 🟡 Started or experimental; needs work.
-⚪ Still to build. Colors describe code, not proof of profitable trading.
-Colored symbols render on GitHub without relying on unsupported text styles.
+Long-term destination stays AI-native fund operating through Alpaca paper
+trading. First product ends at **human-reviewed research report + strategy
+registry**. Portfolio construction and brokerage deployment come after V1.
+Roughly one year of actual paper operation precedes any separate real-money
+decision; development time does not count as paper track record.
 
-## Whole picture
+Our advantage must be measurable research quality: faithful interpretation,
+correct data, independent checks and useful failure records. Do not claim
+“first autonomous fund” or “proven alpha” from a workflow diagram.
+
+## What changed after new research
+
+| Earlier plan | Revised plan |
+| --- | --- |
+| Build whole fund stack in sequence. | Finish narrow verification product before fund operations. |
+| Build increasingly general custom backtester. | Evaluate mature engine first; own adapters, tests and verification layer. |
+| One engine plus critic. | Primary implementation plus independent implementation and trade-level comparison. |
+| Simple promising/rejected result. | Separate fidelity, replication, robustness and economic findings. |
+| Papers are only idea source. | Papers first; reports, code, hypotheses and lessons later. |
+| Store results for review. | Store successes, failures, assumptions and lineage so future research can improve. |
+| Aim directly for paper deployment. | First prove evaluation quality on fixed benchmark; export approved candidates later. |
+
+## Color key
+
+🟢 Existing narrow component. 🟡 Partly built or experimental. ⚪ Still needed.
+Colors describe current code, not planned integrations or proof of profitability.
+
+## V1 pipeline
 
 ```mermaid
 flowchart TD
-    A[Find research papers] --> B[Read and extract exact rules]
-    B --> C[Check rules against paper]
-    C --> D[Obtain historical data]
-    D --> E[Backtest with shared engine]
-    E --> F[Test robustness and challenge results]
-    F --> G[Store every research result]
-    G --> H[Shazil approves paper deployment]
-    H --> I[Combine strategies and set risk limits]
-    I --> J[Trade through Alpaca paper account]
-    J --> K[Monitor, reconcile and evaluate]
-    K --> G
+    A[Paper and source version] --> B[Read full document and extract cited rules]
+    B --> C[Human-checkable StrategySpec]
+    C --> D[Data feasibility and point-in-time checks]
+    D --> E[Primary implementation and backtest]
+    E --> F[Source fidelity, bias, cost and robustness checks]
+    F --> G[Independent implementation and backtest]
+    G --> H[Compare signals, orders, holdings and returns]
+    H --> I[Replication scorecard with evidence]
+    I --> J[Human review]
+    J --> K[Registry: accepted, rejected, blocked and failed]
+    K --> L[Lessons and regression tests]
+    L --> B
 ```
 
-AI helps read, explain and propose. Shared software calculates holdings, returns,
-costs and limits. One agent need not exist for every box: simple scheduled jobs,
-validators and databases often do those jobs better.
+Check data availability early, before expensive code generation. Failures at any
+stage also go into registry. A failed paper is useful output when failure is
+correctly explained. Two engines agreeing is evidence, not proof: both could
+receive wrong rules or wrong data.
 
-## 1. Research: discover ideas and describe them correctly
+## Parts required for V1
 
-| Part | Plain-English job | Current state | Owner |
+| Part | Easy explanation | Current state | Owner |
 | --- | --- | --- | --- |
-| Fund mandate | Define allowed assets, trading frequency, benchmark and risk budget. | 🟡 Investor intake exists; team mandate still needed. | Shazil |
-| Discovery | Search arXiv, SSRN, NBER and journals on schedule; save new papers. | ⚪ Daily discovery and source connectors missing. | Vlad |
-| Paper library | Save PDF, source URL, date, version and hash; avoid duplicate papers. | 🟡 Local PDFs; separate experiment has ingestion/SQLite. No shared service. | Vlad |
-| Relevance filter | Decide whether paper provides implementable trading rules and attainable data. | 🟡 Template router exists; not full research filter. | Vlad |
-| Full document reader | Read methodology, equations, tables, captions and appendices with page references. | 🟡 Text/OCR fallback exists; default extraction truncates to 8,000 characters. Full-paper fidelity unproven. | Vlad |
-| Strategy extraction | Describe what to buy/sell, when, why, with what data and parameters. | 🟡 JSON extraction exists; six-template schema limits coverage. | Vlad |
-| Evidence and ambiguity | Attach supporting quotes/pages to each rule; record missing details and assumptions. | 🟡 Experiment has blueprint verification; main schema lacks structured evidence. | Vlad |
-| Candidate implementation | Convert verified rules into supported strategy logic. | 🟡 Templates plus older generated-code experiments. | Vlad, with Shazil's interface |
-| Paper fidelity check | Compare intended behavior and worked examples against original paper. | 🟡 Experimental verifier/critic; no reliable acceptance suite. | Vlad |
+| Source library | Save document, URL, version, date and hash; detect duplicates. | 🟡 PDFs and experimental ingestion/database. | Vlad |
+| Relevance and data pre-screen | Is there an implementable idea, and can we obtain required data? | 🟡 Template router; full screening missing. | Vlad; Shazil checks data |
+| Full reader | Read equations, tables and appendices, with page references. | 🟡 Text/OCR fallbacks; current default truncates at 8,000 characters. | Vlad |
+| Evidence-backed specification | Describe exact rules; distinguish quoted facts, assumptions and unknowns. | 🟡 JSON extraction and six-template schema. | Vlad |
+| Fidelity checks | Verify rules and candidate behavior against source, including worked examples. | 🟡 Experimental verifier/critic; reference evaluation missing. | Vlad |
+| Engine adapter | Translate verified strategy into supported primary engine without changing meaning. | 🟡 Existing templates; no LEAN integration. | Shazil; Vlad supplies candidate logic |
+| Historical data | Provide correct prices, historical membership, availability timestamps and adjustments. | 🟡 Download/cache; complete point-in-time support missing. | Shazil |
+| Simulation checks | Prove holdings, cash, timing, fills and costs on hand-calculated cases. | 🟡 Weight-return prototype; proper accounting validation needed. | Shazil |
+| Independent comparison | Reimplement strategy separately, then compare detailed outputs. | ⚪ No integrated cross-engine verification. | Shazil |
+| Robustness and bias tests | Challenge dates, costs, parameters, future-data use and multiple trials. | 🟡 Experimental pieces; main validation suite missing. | Shazil |
+| Scorecard and registry | Store findings, evidence, versions and every attempt, including failures. | 🟡 Reports/artifacts exist; shared audit trail missing. | Shazil |
+| Evaluation benchmark | Check whether system catches known mistakes on unseen cases. | 🟡 Core mocked tests; paper-level benchmark missing. | Both |
+| Reliability | Retry/resume jobs, limit model costs, isolate candidate code, preserve artifacts. | 🟡 Graph and subprocess experiments; durable service/isolation missing. | Both in own domains |
+| Team integration | Branches, CI and Shazil-controlled main merges. | 🟢 Configured; still requires sensible review. | Shazil |
 
-Example: paper says “rank stocks by past 12-month return, skip most recent month,
-hold best 10%, rebalance monthly.” Extraction must retain skip-month rule,
-historical stock universe and exact timing. Replacing it with vaguely similar
-momentum template changes strategy. Unsupported logic must remain unsupported
-until matching implementation exists.
+Example: paper says “12-month momentum, skip latest month, hold best 10%.”
+Dropping skip-month rule is fidelity failure even if resulting returns improve.
+Using ETFs instead of original historical stocks is an adaptation, not exact
+replication. Label it explicitly.
 
-## 2. Backtesting: determine what historical evidence actually supports
+## What Shazil should build versus reuse
 
-| Part | Plain-English job | Current state | Owner |
-| --- | --- | --- | --- |
-| Data adapters | Retrieve prices and other required datasets through common interface. | 🟡 Price download/cache exists; broader datasets and provider checks needed. | Shazil |
-| Point-in-time data | Only expose information available on each historical date. Include delistings and historical universe membership where required. | ⚪ Full support missing. | Shazil |
-| Data quality | Catch gaps, stale prices, splits, bad timestamps and unavailable assets. | 🟡 Basic checks; missing symbols can currently be dropped with warning. | Shazil |
-| General strategy interface | Run many kinds of rules through same engine. | 🟡 Six templates exist; extensible strategy interface needed. | Shazil |
-| Accounting and simulation | Track shares, cash, fills, fees, dividends, exposures and portfolio value over time. | 🟡 Daily weight/return prototype; full holdings ledger needed. | Shazil |
-| Execution assumptions | Model order timing, spread, slippage, partial fills, liquidity and borrowing where applicable. | 🟡 One-bar weight shift and linear turnover costs only. | Shazil |
-| Performance report | Show return, risk, drawdown, turnover and appropriate benchmark comparisons. | 🟢 Metrics/report components exist; interpretation and coverage need expansion. | Shazil |
-| Research validation | Separate replication, training, validation and untouched test periods. | ⚪ Current optimization selects best Sharpe on same history it reports. | Shazil |
-| Robustness tests | Change dates, costs and nearby parameters; check multiple market conditions. | 🟡 Separate experiment has robustness code; main engine needs systematic suite. | Shazil |
-| Bias and statistical checks | Detect future-data access, selection bias and lucky winners from many trials. | 🟡 Experimental critic prompts; deterministic checks and trial accounting needed. | Shazil |
-| Reproducibility | Save exact data snapshot, code/spec versions, configuration and all trials. | 🟡 Outputs exist; complete immutable run records missing. | Shazil |
+**Recommended first engine candidate: LEAN. Final selection follows short,
+recorded feasibility test.** LEAN supplies backtesting infrastructure; Marginalia
+owns strategy contract, data provenance, verification and comparison reports.
+Open-source engine availability does not imply free data, cloud services or
+agent hosting. Verify licenses, data rights, costs and local setup separately.
 
-“General” means extensible architecture, not instant support for every asset.
-Start with daily liquid US stocks/ETFs. Add shorting, intraday data, options,
-futures and other assets only with their required data and accounting models.
-Engine should explicitly reject unsupported features.
+Before selecting engine, demonstrate: load our small dataset, run fixed strategy,
+export orders/holdings/cash, reproduce results, and control execution assumptions.
+Record supported capabilities and gaps. Start with daily long-only liquid US
+stocks/ETFs; shortlist actual papers only after checking required data rights and
+availability. Unsupported cases remain visible, not silently simplified.
 
-First accounting issue: current engine holds target weights constant between
-rebalances. Actual shares produce drifting weights as prices change. Correct
-cash/share accounting and cost treatment must precede confidence in results.
-One-bar shifting alone also does not establish realistic execution prices.
+For second engine, evaluate Backtrader or a small independently written reference
+simulator for same limited scope. Do not build two universal engines. Existing
+Marginalia engine is useful regression reference, but first fix its constant-weight
+approximation before relying on it as independent accounting check. Qlib is an
+optional later research/factor framework, not automatic substitute for order-level
+execution comparison.
 
-Replication answers “did we reproduce paper?” Independent testing answers
-“does evidence survive on unseen data after realistic costs?” Positive returns
-alone do not establish alpha: compare against suitable market/factor exposures.
+Independence has two parts:
 
-Return clear verdicts: **invalid / insufficient data / rejected / promising /
-approved for paper trading**. Include reasons and uncertainty. Do not invent
-precise confidence percentages or tune until historical result looks good.
+- Separate strategy implementation from frozen specification; do not merely
+  copy primary signal code into another wrapper.
+- Separate accounting/execution path. Share versioned inputs and intended
+  assumptions, not computed signals, positions or returns.
 
-## 3. Portfolio and paper trading: operate approved ideas
+Keep second implementation blind to primary code/results until comparison.
+Compare signals, order intent, fills, holdings, cash and returns before aggregate
+metrics. Fix different calendars, cost conventions or fill assumptions first.
+Predefine tolerances; never widen them after seeing failure. Separately review
+source-to-spec errors because both implementations can faithfully follow bad spec.
 
-| Part | Plain-English job | Current state | Owner |
-| --- | --- | --- | --- |
-| Strategy registry | Store accepted, rejected and failed ideas with evidence and versions. | 🟡 Artifact files and experimental database; shared lifecycle missing. | Shazil |
-| Human deployment decision | Review fixed strategy version, evidence and proposed allocation. | ⚪ Approval workflow needed. | Shazil |
-| Portfolio construction | Combine complementary strategies; account for overlapping holdings and correlated losses. | 🟡 Ranking/basic sizing exists; multi-strategy construction missing. | Shazil |
-| Risk engine | Enforce position, sector, gross/net exposure, turnover and loss limits. | 🟡 Intake/sizing helpers; account-wide enforcement missing. | Shazil |
-| Signal scheduler | Compute approved signals on actual trading calendar with fresh data. | ⚪ Needed. | Shazil |
-| Order management | Turn target positions into orders; prevent duplicates; handle cancels, rejects and partial fills. | ⚪ Needed. | Shazil |
-| Alpaca adapter | Send orders to paper endpoint, read orders/positions, and receive updates. | ⚪ Dependency/config mentions exist; integrated adapter missing. | Shazil |
-| Reconciliation | Compare local records with broker cash, positions and fills; flag differences. | ⚪ Needed. | Shazil |
-| Monitoring | Track jobs, data freshness, exposures, losses, broker errors and research costs. | ⚪ Unified monitoring needed. | Shazil |
-| Pause/restart controls | Pause new orders, recover safely after failure, and apply explicit position policy. | ⚪ Needed. | Shazil |
-| Performance attribution | Explain which strategy contributed profit, loss and risk; compare expected versus observed behavior. | ⚪ Needed. | Shazil |
-| Lifecycle review | Keep, pause, revise or retire strategies without erasing earlier results. | ⚪ Needed. | Shazil |
+Current engine also chooses best parameters on same period it reports.
+That is exploratory optimization, not independent validation. Existing code
+remains available; updating this plan does not implement or certify new engine.
 
-Approval applies to strategy version, configuration and risk budget. Routine
-paper orders can then run automatically within those limits. Changed rules need
-new evaluation; changing code must not silently replace deployed strategy.
+## Report: separate questions, visible evidence
 
-## 4. Shared infrastructure: make system reliable
+Start with scorecard, not opaque “87% trustworthy” score. Each row reports
+**pass / fail / unknown / not applicable**, test version, evidence and reason.
+Not-applicable requires written justification; unknown never counts as pass.
 
-| Part | Plain-English job | Current state | Owner |
-| --- | --- | --- | --- |
-| Common contracts | Agree on input/output schemas between extraction, engine and registry. | 🟡 Existing StrategySpec; richer versioned contract needed. | Both |
-| Orchestration | Schedule jobs, retry failures, resume progress and record state. | 🟡 LangGraph flow exists; durable scheduling/queues missing. | Both in own domains |
-| Agent evaluations | Compare extracted rules with manually checked papers; measure mistakes and cost. | 🟡 Mocked tests exist; paper-level benchmark missing. | Vlad |
-| Isolation and secrets | Run candidate code in restricted environment; keep broker credentials outside it. | 🟡 Experimental scans/subprocesses; strong isolation missing. | Shazil |
-| Storage and audit | Preserve papers, evidence, code, data versions, approvals and order history. | 🟡 Separate files; shared storage and backup policy needed. | Shazil; Vlad supplies research records |
-| Team workflow | Separate branches, automated tests, reviewed integration and clear ownership. | 🟡 Being established with this roadmap. | Shazil |
-| Operator view | Show pipeline progress, rejected ideas, approvals, account health and results. | 🟡 Static demo/intake prototypes; actual operator dashboard missing. | Shazil later |
+| Question | What report checks |
+| --- | --- |
+| Source fidelity | Did extracted rules and implementation follow cited text/equations? |
+| Data integrity | Correct universe, delistings, corporate actions and publication timestamps? |
+| Temporal integrity | Could each decision use only information available at that time? |
+| Published-result replication | Same data definition, dates and assumptions; comparable paper tables/metrics? |
+| Engine agreement | Do independent implementations agree within preset tolerances? |
+| Robustness | Does result survive nearby parameters, subperiods and realistic costs? |
+| Statistical integrity | Enough observations; uncertainty, dependence and number of tested variants considered? |
+| Economic integrity | Relevant benchmark/factor exposure, turnover, spread, borrow and capacity assessed? |
+| Execution fidelity | Do backtest order/fill logs match intended decisions? Paper fills checked later. |
 
-Sentiment collection/FinBERT is 🟡 existing optional research work. Add it only
-when strategy needs it, with historically timestamped data. Today's sentiment
-cannot be inserted into historical backtest.
+Do not average away critical failures. Future-data access, unexplained divergence
+or missing essential data blocks verification. Fidelity includes human/source
+judgment; scorecard must not pretend every check can be fully automated.
 
-## Start here, in order
+Keep three separate results: **implementation fidelity**, **published replication**
+and **independent economic evidence**. A faithful but unprofitable replication
+can pass fidelity and fail economic assessment. Missing original data means
+replication unknown; return non-replication claim only when comparison is valid.
 
-1. Agree on daily stocks/ETFs as first supported market and write shared handoff
-   contract. Pick three simple papers and manually verify their rules together.
-2. Work in parallel: Vlad produces evidence-backed strategies; Shazil proves
-   engine accounting on tiny datasets where correct answer is known by hand.
-3. Connect one paper end to end. Store all assumptions, data gaps and results.
-   Replicate original rule before attempting parameter improvements.
-4. Add untouched test periods, robustness tests, costs and explicit rejection
-   reasons. Verify future observations cannot change earlier decisions.
-5. Add registry, portfolio limits, approval and Alpaca paper adapter. Verify
-   duplicate prevention, rejected orders, partial fills and restart recovery.
-6. Run one approved strategy with small simulated allocation. Reconcile daily,
-   then add strategies gradually. Automate discovery after handoff works.
-7. Keep monthly and annual reviews. Record deployments, pauses, changes and all
-   failed strategies. Evaluate around one year of actual operation.
+Registry lifecycle: submitted → specified → tested → reviewed, with separate
+outcomes verified / rejected / blocked / error. Record every attempt and reason.
+Research verification is not approval to trade. Later paper deployment requires
+Shazil's separate approval of exact version, allocation and risk limits.
 
-Paper trading is operational target, but simulator fills still differ from real
-markets. Year-end review should consider those differences alongside profit,
-drawdown, costs, trade count and system reliability. Real-capital setup and any
-fund legal/operational requirements belong to separate future project.
-See [Alpaca paper-trading documentation](https://docs.alpaca.markets/docs/paper-trading).
+## First benchmark: three cases, then twenty
 
-## Where current work lives
+1. Hand-review three papers with obtainable data. Fix specs, expected behaviors
+   and comparison tolerances before runs. Add tiny accounting examples.
+2. Produce complete evidence bundle for one paper in both implementations.
+   Detect deliberately planted future-data and timing bugs.
+3. Expand to twenty preselected papers/cases. Include replicable, ambiguous,
+   data-blocked and deliberately corrupted cases; keep denominator fixed.
+4. Separate development papers from hidden evaluation cases and reference code.
+   Freeze prompts/settings and budget before evaluation. Do not let repair loops
+   inspect hidden reference answers; reserve new cases after repeated tuning.
+5. Compare Marginalia with X2Strategy and plain coding-agent baseline using same
+   permitted inputs, data, model/tool budgets, retries and evaluation rules.
+   Report source accuracy, false passes, missed bugs, completion, time and cost.
+6. Store all results, including failures. Public benchmark is later milestone;
+   publish only materials/data permitted by licenses.
 
-- `marginalia/`: current deterministic engine, API, graph, extraction and sizing.
-- `tests/`, `examples/`: current tests and example strategy.
-- `agents/strategy_extraction/`: original PDF/codegen prototype and source papers.
-- `experiments/quantbros/`: preserved separate blueprint/critic/codegen research;
-  not integrated or certified as current engine.
-- `agents/sentiment/`, `frontend/`, `web/`: optional modules and UI prototypes.
+Use leakage controls: record model/version and run date, separate historical
+replication from later holdouts, and track all hypotheses/variants. Public paper
+metrics may have been in model training; historical out-of-sample dates alone do
+not eliminate model memorization. Keep hidden reference implementations separate
+and eventually test forward on new data. Benchmark quality is not trading alpha.
 
-Next: [two-person work plan](WORKSTREAMS.md).
+**V1 done:** frozen 20-case benchmark runs repeatably; every case has evidence or
+explicit blocker; critical seeded bugs cannot receive verified status; feasible
+cases have independent comparisons; human review and full registry work. Publish
+measured rates rather than promising all twenty papers replicate.
+
+## Beyond V1: keep long-term fund vision
+
+| Phase | Work | Owner |
+| --- | --- | --- |
+| V1: verification | Cited specs, data checks, two implementations, scorecard, registry. | Both |
+| V2: research expansion | Scheduled discovery; reports/code/hypotheses as inputs; controlled descendants and combinations. | Vlad owns interpretation; Shazil owns evaluation/lineage |
+| V3: paper fund | Export approved versions; portfolios, risk, scheduler, order lifecycle, Alpaca paper adapter, reconciliation, alerts and pause/recovery. | Shazil |
+| V4: feedback | Compare expected versus actual paper behavior; diagnose errors, update research lessons and regression tests. | Shazil operates; Vlad fixes interpretation issues |
+| Later decision | Review roughly one year of actual paper operation before any real-capital project. | Shazil |
+
+Basic failure memory starts in V1. Later feedback asks whether discrepancy came
+from data revisions, code, fills/costs, changing exposures or weaker signal.
+Distinguish measured cause from hypothesis; record supporting evidence and next
+test. Store parent strategy IDs for every mutation/combination; all descendants
+count as additional research trials. Use fresh validation when lessons change
+strategy. Learning produces reviewed proposals, not silent edits to deployed code.
+
+V3 must assess how strategies interact, not just individual Sharpe. Prefer
+existing broker/execution infrastructure when suitable, while verifying current
+Alpaca paper support and preserving risk controls and reconciliation.
+
+## References that informed this revision
+
+User supplied two research notes. Selected primary sources below support design
+comparisons; these are project descriptions/studies, not independently audited
+profitability claims. Market-wide “first” claims and competitor performance
+numbers are deliberately not part of plan.
+
+| Reference | Practical lesson |
+| --- | --- |
+| [X2Strategy](https://github.com/ALAGENT-HKU/x2strategy) | Source → spec → code → backtest/diagnosis already exists; study artifact contract and benchmark against it. |
+| [PolyQuant/Quantpedia replication study](https://quantpedia.com/guardrails-make-the-researcher-what-an-ai-agent-got-right-and-wrong-replicating-nine-equity-anomalies/) | Published nine-anomaly exercise emphasizes checking fidelity and interpreting failure; comparable workflow alone is no novelty claim. |
+| [LEAN](https://github.com/QuantConnect/Lean) | Evaluate reusable simulation infrastructure before growing custom engine. |
+| [QuantConnect agents](https://www.quantconnect.com/docs/v2/ai-assistance/agents) | Research/backtest/paper workflows already have infrastructure; distinguish hosted agents from open-source engine. |
+| [Qlib](https://github.com/microsoft/qlib) | Optional later factor/model research infrastructure. |
+| [KTD-Fin](https://arxiv.org/abs/2605.28359) | Evaluate memorization and sources of returns, not headline profits alone. |
+
+Dhansetu, Otilio and AYVID in supplied notes are further architecture leads,
+not verified performance baselines here. Study specific relevant components;
+do not delay first reproducible case for exhaustive competitor survey.
+
+Current source map remains in [README](../README.md). Next:
+[Shazil/Vlad work plan](WORKSTREAMS.md).
