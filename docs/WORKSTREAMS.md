@@ -207,4 +207,3 @@ monitoring or live operations. Those stay Shazil's later responsibilities.
 Also defer real capital, broad asset coverage, daily discovery at scale,
 polished UI and automatic strategy mutation. Add them after verification gate,
 using proven infrastructure wherever appropriate.
-
