@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.1.0",
+  "paper_id": "fixture-spy-ma-002",
+  "title": "Dual moving average timing on SPY",
+  "source_url": "https://example.org/papers/spy-ma",
+  "source_path": "fixtures/spy_dual_ma.json",
+  "parsed_at": "2025-02-01T10:00:00",
+  "sections": {
+    "abstract": "We apply a fast and slow moving average crossover on the S&P 500 ETF.",
+    "methodology": "Go long SPY when the 20-day moving average crosses above the 50-day moving average; exit to cash when the fast average crosses below the slow average. Use daily closing prices.",
+    "introduction": "",
+    "conclusion": "",
+    "notes": ""
+  },
+  "extracted_tickers": ["SPY"],
+  "paper_category": "trend",
+  "asset_universe_type": "etfs",
+  "asset_universe_notes": "S&P 500 ETF",
+  "regime_claim": "bull",
+  "raw_metadata": {
+    "fixture": "spy_dual_ma",
+    "logic_hints": {
+      "preset": "spy_dual_ma",
+      "suggested_strategy": "dual_moving_average",
+      "fast_window": 20,
+      "slow_window": 50,
+      "tickers": ["SPY"]
+    }
+  }
+}

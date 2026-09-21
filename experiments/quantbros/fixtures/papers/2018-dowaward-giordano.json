@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.1.0",
+  "paper_id": "2018-dowaward-giordano",
+  "title": "CHARLES H. DOW AWARD",
+  "source_url": null,
+  "source_path": "Papers/2018_dowaward-giordano.pdf",
+  "parsed_at": "2026-03-23T06:02:39.166577Z",
+  "sections": {
+    "abstract": "Passive management over the last years has attracted greater attention\nthan active management. Bloomberg reports that, only in the first half of\n2017, flows out of active into passive funds reached nearly $500 billion\ncompared to almost $300 billion dollars in 2016. This migration, encouraged\nby the spread of ETFs, concerns not only retail investors but also institutions\nand financial advisers. This paper aims to demonstrate how the allocation\nof a portfolio designed for passive management can represent the\nfoundation of an actively managed portfolio through a non-discretionary\nquantitative strategy that can outperform the market.\n2018 Charles H. Dow Award3\nETFs can be seen as one of the most successful financial\ninnovations in the last decades: they have allowed investors to\ndiversify their investments in more affordable ways\n1 . Once the\nasset classes and ETFs have been selected, the investor has\nto choose between active or passive portfolio management.\nSome academics argue that investors should adopt passive\nmanagement to exploit lower operating costs. Passive investing\nis based on the Efficient Market Hypothesis (EMH):\n• Information is available to all market participants\n• Market participants act on this information\n• Market participants are rationals\nTherefore, all news or data are reflected in a security’s current\nprice; so there is virtually no benefit to security analysis, or\nmanagers actively building portfolios. On the opposite, active\nmanagement is based on the assumption that markets are not\nfully efficient: as the studies of Behavioral Finance have shown,\nthe market particpants are not always rationals, so there are\nopportunities for skilled managers to capitalise on inefficiencies\nthrough a dynamic exposure to selected assets. The spread of\nETFs, the decreasing volatility of most asset classes and the\nunderperformance of Hedge Funds compared to benchmarks,\nhas caused a progressive migration of investment flows from\nactive funds to passive funds.\nFIGURE 1. Net flows into U.S-based passibly managed fund and out of active funds in the first half of each year\nSource: Bloomberg\n4\nAccording to the writer’s opinion,\nthe success of passive funds is\nclosely linked to the low levels\nof volatility and range of this\ncycle, distorted by Central Banks’\nQuantitative Easing operations. A\nloop has been created, where low\nvolatility has encouraged passive\nmanagement, whose inflows have\nled to a further flattening of the\nmarket volatility.\nWhat might seem like a “new\nnormal” is actually a “temporary\nnormal”, which has already\noccurred in the past, in different\nforms, exacerbated by the presence\nof leveraged volatility ETFs.\nThe loop is supposed to continue\nuntil an exogenous event occurs\nthat leads to a systemic mean\nreversion. An active asset\nallocation, due to a dynamic\nexposure to its constituent assets,\nis able to adapt to possible sudden\nchanges of scenario. The purpose\nof this paper is to demonstrate how\nan allocation originally designed\nfor a passive fund can be a\nfundamental starting point for an\nactive quantitative portfolio. The\npaper uses the 7Twelve Portoflio\nas starting passive base: it consists\nof 12 mutual funds (in this case, 12\nETFs) from 7 different asset classes.\nThe dynamic selection of assets\nand their weightings is managed\nby a revised version of the Flexible\nAsset Allocation, supported with\nnew contribution factors and new\nproprietary indicators in order to\nimprove overall efficiency.\nFIGURE 2. Volatility Index (VIX). Daily data, from 1990 to 2017.\nSource: Yahoo! Finance data\nFIGURE 3. Volatility Index (VIX) distribution histogram, Daily Data, from 1990 to 2017.\nSource: Yahoo! Finance data\nFIGURE 4. VIX: number of days with close <10, rolling 6m windows, from 1990 to 2017.\nSource: Cit Research\n2018 Charles H. Dow Award RANKED ASSET ALLOCATION MODEL\n5\nI. BACKGROUND AND METHODOLOGY\nThis paper originates from considerations about the studies of\ndifferent authors, providing a link between different concepts\nand methods through personal implementations. It is worth\nmentioning the most influential authors, with reference to their\ncontribution:\n• Graig L. Israelsen, for the conception of the 7Twelve\nPortfolio and selection of its components;\n• Wouter J. Keller and Hugo S. van Putten, for their\ncontribution in the definition of a new quantitative\nstrategy (Flexible Asset Allocation - FAA) based on new\nmomentum factors beyond the traditional ones;\n• Robert Engle and Tim Bollerslev, for the development of\nmethods of analysis of economic historical series with dynamic\nvolatility over time;\n• Sébastien Maillard, Thierry Roncalli, Jérôme Teiletche, for\ntheir contribution in defining the Risk Parity methodology, using\nvolatility as a component in determining the allocation;\n• Welles Wilder, for technical studies on breakout, range\nand Trend concept models.\nIn particular, the paper focuses on the construction and\nbacktesting of an allocation model based on the following\npillars:\n• (M) Absolute Momentum:",
+    "methodology": "This paper aims to demonstrate how the allocation \nof a portfolio designed for passive management can represent the \nfoundation of an actively managed portfolio through a non-discretionary \nquantitative strategy that can outperform the market. Once the \nasset classes and ETFs have been selected, the investor has \nto choose between active or passive portfolio management. The purpose \nof this paper is to demonstrate how \nan allocation originally designed \nfor a passive fund can be a \nfundamental starting point for an \nactive quantitative portfolio. Israelsen, for the conception of the 7Twelve\nPortfolio and selection of its components;\n• Wouter J. van Putten, for their\ncontribution in the definition of a new quantitative\nstrategy (Flexible Asset Allocation - FAA) based on new\nmomentum factors beyond the traditional ones;\n• Robert Engle and Tim Bollerslev, for the development of\nmethods of analysis of economic historical series with dynamic\nvolatility over time;\n• Sébastien Maillard, Thierry Roncalli, Jérôme Teiletche, for\ntheir contribution in defining the Risk Parity methodology, using\nvolatility as a component in determining the allocation;\n• Welles Wilder, for technical studies on breakout, range\nand Trend concept models. In particular, the paper focuses on the construction and \nbacktesting of an allocation model based on the following \npillars:\n• (M) Absolute Momentum: to determine assets’ momentum. Calculation: 4 months momentum on daily returns. • Rank(M) Ranked Absolute Momentum: to rank the assets\naccording to the monthly Absolute Momentum values in\nascending order.",
+    "introduction": "",
+    "conclusion": "",
+    "notes": "Conclusion section not confidently extracted."
+  },
+  "extracted_tickers": [
+    "SPY",
+    "DIA",
+    "EFA",
+    "VNQ",
+    "DBC",
+    "EEM"
+  ],
+  "paper_category": "volatility",
+  "asset_universe_type": "multi_asset",
+  "asset_universe_notes": "Tickers mentioned: SPY, DIA, EFA, VNQ, DBC, EEM",
+  "regime_claim": "not_specified",
+  "raw_metadata": {
+    "parsed_at": "2026-03-23T06:02:39.166577+00:00",
+    "source_filename": "2018_dowaward-giordano.pdf",
+    "content_hash": "2907629cd6d9d3289a960513e50b18067dac5700d4f9433faf1df2f818f0122e",
+    "extracted_tickers": [
+      "SPY",
+      "DIA",
+      "EFA",
+      "VNQ",
+      "DBC",
+      "EEM"
+    ],
+    "ingest_warnings": [],
+    "classification_confidence": 0.95,
+    "classification_method": "heuristic",
+    "classification_reasoning": "Keyword-based classification from title, abstract, and methodology.",
+    "logic_hints": {
+      "suggested_strategy": "momentum_rank",
+      "lookback_days": 126,
+      "top_n": 3,
+      "tickers": [
+        "SPY",
+        "DIA",
+        "EFA",
+        "VNQ",
+        "DBC",
+        "EEM"
+      ],
+      "preset": "etf_momentum_rank"
+    }
+  }
+}

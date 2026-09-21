@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.1.0",
+  "paper_id": "tactical",
+  "title": "A Quantitative Approach to Tactical Asset Allocation",
+  "source_url": null,
+  "source_path": "Papers/tactical.pdf",
+  "parsed_at": "2026-03-23T06:02:59.742105Z",
+  "sections": {
+    "abstract": "In this paper we update our 2006 white paper “A Quantitative Approach to Tactical Asset\nAllocation” with new data from the 2008-2012 period. How well did the purpose of the\noriginal paper - to present a simple quantitative method that improves the risk-adjusted\nreturns across various asset classes — hold up since publication? Overall, we find that the\nmodels have performed well in real-time, achieving equity like returns with bond like\nvolatility and drawdowns. We also examine the effects of departures from the original\nsystem including adding more asset classes, introducing various portfolio allocations, and\nimplementing alternative cash management strategies.\nMebane T. Faber\nCambria Investment Management, LP\n2321 Rosecrans Ave., Suite 3225\nEl Segundo, CA\n90245\n310-683-5500\nE-mail: mf@cambriainvestments.com\nwww.cambriainvestments.com\nCopyright Mebane Faber Research 2013\n1\nCambria Investment Management has been managing\ninvestments for individuals and institutions since 2007. To\nlearn more about all of our investment offerings, please\ncontact us for more information:\nPhone: 310-683-5500\nEmail: info@cambriainvestments.com\nWebsite: http://www.cambriainvestments.com\n2\nThe original version of this paper was published in 2006, with an update in 2009.\nUpdates included in the 2013 paper include:\n1. Results are extended to include the years 2009-2012.\n2. Additional asset classes are included.\n3. Alternative cash management strategies are included.\n4. Additional conservative and aggressive approaches are included.\n5. Alternative allocations are included.\n6. References translated into hyperlinks.\n3\nINVESTING IN RISKY ASSETS\nMuch has happened in the world since the original publication of this white paper in\n2006. However, change has always been the constant, and indeed has anything new\nreally been seen in our world of investing? Bubbles, defaults, government interventions,\nbear markets, downgrades, quantitative easing, fortunes made and lost — they’ve all\nhappened before. (For a lengthy examination of bubbles, see our paper “Learning to Love\nInvestment Bubbles”.)\nSince publication of the original paper we have seen a devastating bear market in 2008 —\n2009. The normal benefits of diversification disappeared as many non-correlated asset\nclasses experienced large declines simultaneously. Commodities, REITs, and foreign\nstock indices all suffered drawdowns over 50%. (Drawdown is the peak-to-trough\ndecline an investor would experience in an investment, and we calculate it here on a\nmonthly basis.) The classic barometer of stocks, the S&P 500 Index, declined 36.77% in\n2008 alone.\nThe fantastic book Triumph of the Optimists: 101 Years of Global Investment Returns\n(and 2012 update here), illustrates that many global asset classes in the twentieth century\nproduced spectacular gains in wealth for individuals who bought and held those assets for\ngeneration-long holding periods, but the assets also went through regular and painful\ndrawdowns like 2008. All of the G-7 countries have experienced at least one period\nwhere stocks lost 75% of their value. The unfortunate mathematics of a 75% decline\n4\nrequire an investor to realize a 300% gain just to get back to even — the equivalent of\ncompounding at 10% for 15 years!\nFor some long term perspective, below are some long term charts based on the data from\nMorningstar / Dimson Marsh Staunton. Below are the best, middle, and worst case\nscenarios for the main asset classes of sixteen countries from 1900-2011. All are real\nreturn series on a log graph (except the last one).\nFirst, here are the best cases for returns on your cash. This chart goes to show that\nleaving cash under your mattress is a slow bleed for a portfolio. Germany is excluded\nafter the first series as it dominates the worst case scenarios (in this case hyperinflation).\n5\nChart 1 — Cash Real Returns, 1900-2011\nBest Case: -2.30% per year\nMiddle: -4.10%\nWorst Case: -100%\nssa Value of Cash, 1900 - 2011\n100\n10\n-2.30%\n1\n—— Best Case\n—Median ~4.10%\no1\n—Worst Case\n-100%\n0.01\nSSSRSRRRSRFRSSRRRRRRERS\nNext up is real returns for short term government bills.\n6\nChart 2 -Short Term Government Bills Real Returns, 1900-2011\nBest Case: 2.25% per year\nMiddle: 0.71%\nWorst Case: -3.63%\n(Real Worst Case, Germany -100%)\niia Bills, Real Returns 1900 - 2011\n— Best Case\n—Median 2.25%\n000\n—Worst Case\n0.71%\n100\n10\n3.63%\nFollowed by the real returns for longer dated bonds:\n7\nChart 3 -Long Term Government Bonds Real Returns, 1900-2011\nBest Case: 3.04% per year\nMiddle: 1.40%\nWorst Case: -1.91%\n(Real Worst Case, Germany -100%)\nrae Bonds, Real Returns 1900 - 2011\n—Best Case wane\nNOD 5 —Median\n—Worst Case 1.40%\n100 |\n10 4 -1.91%\n1\noa\nSeep eee kee ese eee eee eee eke See\nAnd finally, the real returns for equities.\n8",
+    "methodology": "How well did the purpose of the\n\noriginal paper - to present a simple quantitative method that improves the risk-adjusted\n\nreturns across various asset classes — hold up since publication? We also examine the effects of departures from the original\n\nsystem including adding more asset classes, introducing various portfolio allocations, and\n\nimplementing alternative cash management strategies. All are real\n\nreturn series on a log graph (except the last one). This chart goes to show that\n\nleaving cash under your mattress is a slow bleed for a portfolio.",
+    "introduction": "",
+    "conclusion": "",
+    "notes": "Conclusion section not confidently extracted."
+  },
+  "extracted_tickers": [
+    "SPY",
+    "TLT",
+    "IEF",
+    "VNQ",
+    "DBC"
+  ],
+  "paper_category": "trend",
+  "asset_universe_type": "multi_asset",
+  "asset_universe_notes": "S&P 500",
+  "regime_claim": "bear",
+  "raw_metadata": {
+    "parsed_at": "2026-03-23T06:02:59.742105+00:00",
+    "source_filename": "tactical.pdf",
+    "content_hash": "d0a5b2353e00bd868a85c3eb6bc758f7ebdcfca5bfaf7d2ff012f4beab15cc1a",
+    "extracted_tickers": [
+      "SPY",
+      "TLT",
+      "IEF",
+      "VNQ",
+      "DBC"
+    ],
+    "ingest_warnings": [
+      "used OCR fallback for PDF extraction"
+    ],
+    "classification_confidence": 0.7999999999999999,
+    "classification_method": "heuristic",
+    "classification_reasoning": "Keyword-based classification from title, abstract, and methodology.",
+    "logic_hints": {
+      "suggested_strategy": "dual_moving_average",
+      "fast_window": 20,
+      "slow_window": 50,
+      "tickers": [
+        "SPY"
+      ],
+      "preset": "spy_dual_ma"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Main engine, API and offline test suite. Optional legacy agents use requirements.txt.
+numpy>=1.26,<3
+pandas>=2.2,<3
+pydantic>=2.6,<3
+python-dotenv>=1,<2
+openai>=1,<3
+yfinance>=0.2.40,<2
+langgraph>=1,<2
+fastapi>=0.115,<1
+httpx>=0.27,<1
+uvicorn>=0.30,<1
+PyPDF2>=3,<4
+pytest>=8,<10

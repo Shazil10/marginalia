@@ -1,0 +1,13 @@
+{
+  "strategy_name": "Sector Momentum Rotation",
+  "template": "sector_rotation",
+  "universe": ["XLK", "XLV", "XLF", "XLE", "XLY", "XLP", "XLI", "XLU", "XLB", "XLRE"],
+  "benchmark": "SPY",
+  "safe_asset": "BIL",
+  "rebalance": "monthly",
+  "parameters": { "lookback": 126, "top_n": 3, "trend_sma": 200 },
+  "parameter_ranges": { "lookback": [63, 126, 252], "top_n": [2, 3, 4] },
+  "source_paper": "Sector rotation (demo)",
+  "strategy_type": "momentum",
+  "notes": "Hold the top-N sector ETFs by trailing return that are also above their 200-day trend; park the rest in T-bills."
+}

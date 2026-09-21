@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.1.0",
+  "paper_id": "fixture-minimal-001",
+  "title": "Example momentum factor on US equities",
+  "source_url": "https://example.org/papers/momentum-demo",
+  "source_path": "fixtures/minimal_paper.json",
+  "parsed_at": "2025-01-15T12:00:00",
+  "sections": {
+    "abstract": "We study cross-sectional momentum among large-cap US ETFs.",
+    "methodology": "Each month, rank ETFs by 6-month total return and hold the top 3 until next rebalance.",
+    "introduction": "",
+    "conclusion": "",
+    "notes": ""
+  },
+  "extracted_tickers": ["SPY", "QQQ", "IWM", "EFA", "TLT"],
+  "paper_category": "momentum",
+  "asset_universe_type": "etfs",
+  "asset_universe_notes": "Large-cap ETF basket",
+  "regime_claim": "mixed",
+  "raw_metadata": {
+    "journal": "fixture",
+    "logic_hints": {
+      "preset": "etf_momentum_rank",
+      "suggested_strategy": "momentum_rank",
+      "lookback_days": 126,
+      "top_n": 3,
+      "tickers": ["SPY", "QQQ", "IWM", "EFA", "TLT"]
+    }
+  }
+}

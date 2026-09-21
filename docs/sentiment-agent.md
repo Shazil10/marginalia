@@ -53,13 +53,14 @@ This output is intended for the rest of the pipeline, not for direct manual insp
 - `agents/sentiment/sentiment.py`
 - `agents/sentiment/pipeline.py`
 
-Thin compatibility wrappers remain at the repo root:
+Supported command-line wrappers at repo root:
 
 - `run_social_ingest.py`
 - `build_sentiment_input.py`
 - `run_finbert_sentiment.py`
-- `tavily_social_pipeline.py`
-- `sentiment_pipeline.py`
+
+For imports, use `agents.sentiment.pipeline` or `agents.sentiment.sentiment`
+directly. Redundant wildcard-import wrappers were removed.
 
 ## Integration Notes
 

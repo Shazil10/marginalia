@@ -1,143 +1,83 @@
 # Marginalia
 
-**The insight in the margins of quant research, made executable.**
+Research papers → verified trading rules → historical tests → approved Alpaca
+paper trading. Paper account is our deployment target; real money is future scope.
 
-Marginalia is a multi-agent quant research platform that turns published academic papers into backtested, sentiment-aware strategy intelligence — built for small funds, RIAs, family offices, indie quants, and fintech API partners.
+Start with these two guides:
 
-> **Status: Work in progress.** Core agent modules are functional; the full LangGraph pipeline, production API, and live product UI are under active development. Expect breaking changes.
+- [Complete system, current progress and next steps](docs/AI_NATIVE_HEDGE_FUND.md)
+- [Shazil and Vlad: parallel workstreams and handoff](docs/WORKSTREAMS.md)
 
-**Website (coming soon):** [marginalia.markets](https://marginalia.markets)
+## Current state
 
----
+`marginalia/` contains deterministic backtesting prototype, six strategy templates,
+validated JSON extraction, PDF text/OCR fallbacks, market-data cache, metrics,
+basic sizing, LangGraph orchestration, FastAPI endpoints and CLI. Offline tests
+cover these components. Full-paper fidelity, general accounting, independent
+validation, portfolio risk and Alpaca order execution still need development.
 
-## What it does
+Current backtest optimizes and reports on same history by default. Use
+`--no-optimize` for baseline runs; even then, results are preliminary research.
+Read engine gaps in system guide before interpreting performance.
 
-Marginalia reads dense quant finance papers and extracts the actionable strategy buried inside them — entry/exit rules, parameters, asset universes — then generates Python backtest code, runs historical simulation, and layers live sentiment and risk analysis on top.
+## Run current engine
 
-```
-User goals → Intake → Paper retrieval → Strategy extraction → Codegen → Backtest
-                                                              ↓
-                                         Sentiment (FinBERT) + Risk + Ranking → Recommendations
-```
-
----
-
-## Current modules
-
-| Module | Status | Description |
-|--------|--------|-------------|
-| **Intake** | ✅ Working | Natural language → structured risk profile (drawdown, horizon, capital) |
-| **Strategy extraction** | ✅ Working | PDF → JSON spec → Python codegen → sandboxed backtest (self-healing retry loop) |
-| **Sentiment** | ✅ Working | Tavily news + Reddit ingestion → FinBERT scoring per ticker |
-| **Retrieval (FAISS)** | 🚧 Planned | Semantic search over curated academic paper library |
-| **Debate & ranking** | 🚧 Planned | Dual-LLM stress-test + Kelly sizing against client mandates |
-| **Execution** | 🚧 Planned | Gated Alpaca paper-trading with human approval |
-
-See [`spec.md`](spec.md) for the full build specification.
-
----
-
-## Quick start
-
-### Prerequisites
-
-- Python 3.11+
-- API keys in a `.env` file at the project root (see [Environment variables](#environment-variables))
-
-### Install
+Python 3.12 recommended. Core install avoids optional sentiment/legacy dependencies.
 
 ```bash
-git clone https://github.com/Shazil10/marginalia.git
-cd marginalia
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-core.lock
+python -m pytest tests
+python -m marginalia.cli --help
 ```
 
-### Run agents
-
-**Intake agent** — parse investment goals from natural language:
+Backtest example (downloads market data; no LLM required):
 
 ```bash
-python agents/intake.py
+python -m marginalia.cli backtest --spec examples/sector_rotation.json --no-optimize
 ```
 
-**Strategy extraction** — PDF → backtest pipeline:
+API:
 
 ```bash
-python agents/strategy_extraction/mvp.py
+python -m uvicorn marginalia.api.app:app --reload
 ```
 
-**Sentiment pipeline** — news + social → FinBERT scores:
+API documentation: `http://127.0.0.1:8000/docs`.
+
+Paper extraction requires `NEBIUS_API_KEY` in local `.env` and funded provider
+access. Set `NEBIUS_FAST_MODEL` / `NEBIUS_POWER_MODEL` to available models;
+defaults in code may not match account access. OCR fallback additionally needs
+its Python packages and Tesseract system installation.
 
 ```bash
-python run_social_ingest.py --ticker TSLA
-python build_sentiment_input.py --ticker TSLA --company Tesla
-python run_finbert_sentiment.py --ticker TSLA
+python -m marginalia.cli paper --pdf agents/strategy_extraction/quantmentals.pdf --no-optimize
 ```
 
-**Web demo UI** (static prototype):
+`requirements.txt` retains optional original agent dependencies. Original agents
+may also use `OPENROUTER_API_KEY` and `TAVILY_API_KEY`. Keep keys in ignored `.env`.
+Alpaca integration is planned; no brokerage orders are placed by above commands.
 
-```bash
-cd web && npx serve .
-```
+## Repository map
 
----
+| Path | Purpose |
+| --- | --- |
+| `marginalia/` | Current engine, data, extraction, graph, API and sizing. |
+| `tests/`, `examples/` | Offline core tests and example strategy. |
+| `agents/strategy_extraction/` | Original PDF/code-generation prototype and source papers. |
+| `experiments/quantbros/` | Separate research snapshot: blueprints, critic, verifier and generated-code trials. |
+| `agents/sentiment/` | Optional news/social collection and FinBERT. |
+| `frontend/`, `web/` | Historical Flask intake and static product prototypes; not operating console. |
+| `docs/` | Current roadmap, ownership and supporting documentation. |
+| `spec.md` | Historical build proposal; current guides take precedence. |
 
-## Environment variables
+Generated reports, downloaded sentiment and caches are local outputs, not source.
+Original run examples remain recoverable from Git history. See
+[cleanup record](docs/CLEANUP.md) for preserved experiments and removed duplication.
 
-Create a `.env` file in the project root:
+## Team workflow
 
-```env
-NEBIUS_API_KEY=
-TAVILY_API_KEY=
-OPENROUTER_API_KEY=
-ALPACA_API_KEY=
-ALPACA_SECRET_KEY=
-ALPACA_BASE_URL=https://paper-api.alpaca.markets
-```
-
----
-
-## Project structure
-
-```
-marginalia/
-├── agents/
-│   ├── intake.py                 # Risk profile extraction
-│   ├── sentiment/                # News + social → FinBERT
-│   └── strategy_extraction/      # PDF → codegen → backtest
-├── data/                         # Raw + processed sentiment data
-├── docs/                         # Agent documentation
-├── frontend/                     # Streamlit intake prototype
-├── utils/                        # Shared LLM client
-├── web/                          # Product demo UI
-├── spec.md                       # Full pipeline specification
-└── requirements.txt
-```
-
----
-
-## Tech stack
-
-- **Orchestration:** LangGraph (planned)
-- **LLMs:** Nebius / OpenRouter (OpenAI-compatible)
-- **Vector store:** FAISS + sentence-transformers (planned)
-- **Backtesting:** yfinance, pandas, quantstats
-- **Sentiment:** FinBERT, Tavily
-- **Execution:** Alpaca (paper trading, planned)
-- **Frontend:** Vercel-ready static UI + Streamlit prototype
-
----
-
-## Disclaimer
-
-Marginalia is a **research and simulation tool**. It does not provide investment advice. Paper trading only. Not affiliated with any brokerage. Past backtest performance does not guarantee future results.
-
----
-
-## Author
-
-**Shazil Farukh** — [GitHub](https://github.com/Shazil10) · [Portfolio](https://shazilfarukh.com) · [LinkedIn](https://www.linkedin.com/in/shazil-farukh)
-
-Built in San Francisco.
+Shazil works on `Shazil`; Vlad works on `Vlad`. Both open pull requests into
+`main`. Shazil (`@Shazil10`) controls main merges. CI runs offline core tests.
+See [work plan](docs/WORKSTREAMS.md#branches-and-merge-workflow).

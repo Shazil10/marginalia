@@ -1,4 +1,8 @@
 # QuantAgent — Full Build Specification
+> Historical proposal, not current implementation status. Follow
+> [current system roadmap](docs/AI_NATIVE_HEDGE_FUND.md) and
+> [team workstreams](docs/WORKSTREAMS.md). Deployment target is Alpaca paper trading.
+
 > Use this document as a prompt for AI coding agents (Cline, Cursor, GitHub Copilot, etc.) to build the full QuantAgent pipeline locally. Follow sections in order. Each section is a self-contained build task.
 
 ---
